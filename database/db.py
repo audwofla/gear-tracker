@@ -38,6 +38,7 @@ def init_db():
                 post_id         TEXT PRIMARY KEY,
                 subreddit       TEXT NOT NULL,
                 title           TEXT NOT NULL,
+                body            TEXT,
                 url             TEXT NOT NULL,
                 author          TEXT,
                 listing_type    TEXT CHECK(listing_type IN ('WTS', 'WTB', 'WTT')),
