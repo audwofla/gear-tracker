@@ -1,3 +1,4 @@
+import html
 import logging
 import re
 import time
@@ -16,6 +17,13 @@ DEFAULT_SUBREDDITS = ["photomarket"]
 # Matches both [WTS]/[B] style and plain WTS/WTB/WTT
 _LISTING_TYPE_RE = re.compile(r"\b\[?(WTS|WTB|WTT|S|B|T)\]?\b", re.IGNORECASE)
 _LISTING_TYPE_MAP = {"S": "WTS", "B": "WTB", "T": "WTT"}
+
+
+_HTML_TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _strip_html(text: str) -> str:
+    return html.unescape(_HTML_TAG_RE.sub("", text)).strip()
 
 
 _USER_AGENT = "gear-tracker/0.1 (RSS ingest)"
@@ -61,6 +69,7 @@ def fetch_posts(subreddit: str, limit: int = 25) -> list[dict]:
         title = get("title")
         post_id = _post_id_from_atom_id(get("id"))
         listing_type = _parse_listing_type(title)
+        body = _strip_html(get("content"))
 
         logger.debug("post=%s type=%s title=%r", post_id, listing_type, title)
 
@@ -71,6 +80,7 @@ def fetch_posts(subreddit: str, limit: int = 25) -> list[dict]:
             "url": post_url,
             "author": author,
             "listing_type": listing_type,
+            "body": body,
         })
 
     return posts
