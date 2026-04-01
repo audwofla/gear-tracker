@@ -3,8 +3,8 @@ import logging
 import re
 import time
 import xml.etree.ElementTree as ET
-
 import requests
+from pprint import pprint
 
 logger = logging.getLogger(__name__)
 
@@ -101,4 +101,4 @@ def poll_subreddits(
 
 if __name__ == "__main__":
     posts = fetch_posts(SUBREDDIT)
-    print(posts)
+    pprint(posts)
