@@ -63,5 +63,10 @@ def init_db():
                     mount       TEXT,
                     max_price   NUMERIC
                 );
+
+                CREATE TABLE IF NOT EXISTS keywords (
+                    id      SERIAL PRIMARY KEY,
+                    keyword TEXT NOT NULL UNIQUE
+                );
             """)
     conn.close()
