@@ -43,7 +43,7 @@ def _post_id_from_atom_id(atom_id: str) -> str:
     return atom_id[3:] if atom_id.startswith("t3_") else atom_id
 
 
-def fetch_posts(subreddit: str, limit: int = 25) -> list[dict]:
+def fetch_posts(subreddit: str, limit: int = 100) -> list[dict]:
     url = f"https://www.reddit.com/r/{subreddit}/new/.rss?limit={limit}"
     logger.debug("Fetching r/%s (limit=%d)", subreddit, limit)
 
