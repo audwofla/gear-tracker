@@ -42,8 +42,11 @@ def init_db():
                     url             TEXT NOT NULL,
                     author          TEXT,
                     listing_type    TEXT CHECK(listing_type IN ('WTS', 'WTB', 'WTT')),
-                    seen_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                    seen_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    processed       BOOLEAN NOT NULL DEFAULT FALSE
                 );
+
+                ALTER TABLE posts ADD COLUMN IF NOT EXISTS processed BOOLEAN NOT NULL DEFAULT FALSE;
 
                 CREATE TABLE IF NOT EXISTS price_history (
                     id              SERIAL PRIMARY KEY,
